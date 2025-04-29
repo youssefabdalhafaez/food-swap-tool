@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>أداة بدائل الطعام الاحترافية - د. يوسف</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #1a1d24; /* خلفية داكنة */
+      --container-bg: #252a34; /* خلفية الحاوية أفتح قليلاً */
+      --primary-accent: #ff8c00; /* برتقالي داكن (لون مميز) */
+      --primary-accent-darker: #e07b00; /* برتقالي أغمق للهوفر */
+      --text-color: #e0e0e0; /* لون نص فاتح */
+      --label-color: #a0a0a0; /* لون العناوين الفرعية (Labels) */
+      --input-bg: #313641; /* خلفية حقول الإدخال */
+      --input-border: #4a4f5a; /* حدود حقول الإدخال */
+      --input-focus-border: var(--primary-accent); /* لون الحدود عند التركيز */
+      --success-color: #2ecc71; /* أخضر للنجاح */
+      --success-bg: rgba(46, 204, 113, 0.1);
+      --error-color: #e74c3c; /* أحمر للخطأ */
+      --error-bg: rgba(231, 76, 60, 0.1);
+      --font-family: 'Tajawal', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 2rem 1rem; /* إضافة padding جانبي للهواتف */
+      direction: rtl;
+      line-height: 1.7;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* المحاذاة للأعلى للسماح بالـ scroll */
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: var(--container-bg);
+      border-radius: 20px; /* حواف أكثر دائرية */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 550px;
+      width: 100%; /* يأخذ العرض الكامل حتى max-width */
+      margin: 1rem auto;
+      padding: 2.5rem; /* padding داخلي أكبر */
+      text-align: right; /* محاذاة النصوص لليمين داخل الحاوية */
+    }
+
+    .logo-placeholder {
+      background-color: transparent; /* شفاف */
+      border: 2px solid var(--primary-accent); /* حدود باللون المميز */
+      border-radius: 12px;
+      margin-bottom: 2.5rem; /* مسافة أكبر */
+      padding: 1rem;
+      color: var(--primary-accent); /* لون النص مطابق للحدود */
+      font-weight: 700; /* خط أعرض */
+      font-size: 1.8rem; /* حجم أكبر */
+      text-align: center; /* توسيط النص */
+      /* يمكن وضع لوجو صورة هنا أيضاً */
+    }
+
+    h1 {
+      color: var(--primary-accent);
+      margin-bottom: 2rem;
+      text-align: center; /* توسيط العنوان الرئيسي */
+      font-weight: 700;
+      font-size: 2.2rem; /* حجم أكبر للعنوان */
+    }
+
+    label {
+      display: block;
+      width: 100%;
+      margin: 1.2rem 0 0.6rem 0;
+      font-size: 1rem; /* حجم مناسب */
+      color: var(--label-color); /* لون أفتح قليلاً من النص الرئيسي */
+      font-weight: 400; /* خط عادي */
+    }
+
+    select, input[type="number"] {
+      display: block;
+      width: 100%;
+      padding: 0.9rem 1rem; /* padding أكبر */
+      border-radius: 10px; /* حواف دائرية */
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      font-size: 1.1rem; /* حجم خط أكبر قليلاً */
+      font-family: var(--font-family);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease; /* انتقال سلس */
+      margin-bottom: 1rem;
+      appearance: none; /* إزالة المظهر الافتراضي */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    /* Custom arrow for select */
+    select {
+       background-image: url('data:image/svg+xml;utf8,<svg fill="%23a0a0a0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+       background-repeat: no-repeat;
+       background-position: left 1rem center;
+       padding-left: 3rem; /* زيادة padding لليسار لإفساح مكان للسهم */
+    }
+
+
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: var(--input-focus-border);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2); /* ظل خفيف عند التركيز */
+    }
+
+    /* لإخفاء الأسهم الافتراضية في حقل الرقم */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield; /* Firefox */
+    }
+
+    /* Placeholder text style */
+     input::placeholder {
+        color: #777;
+        opacity: 1;
+     }
+
+    button {
+      background: linear-gradient(90deg, var(--primary-accent), var(--primary-accent-darker)); /* تدرج لوني */
+      color: #ffffff;
+      padding: 0.9rem 2rem; /* padding مناسب */
+      font-size: 1.2rem;
+      font-weight: 700; /* خط أعرض */
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 2rem; /* مسافة أكبر فوق الزر */
+      width: 100%; /* يأخذ العرض الكامل */
+      transition: transform 0.2s ease, box-shadow 0.3s ease; /* انتقال للحركة والظل */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      transform: translateY(-2px); /* حركة بسيطة للأعلى عند التمرير */
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3); /* ظل أكبر بلون مميز */
+    }
+    button:active {
+        transform: translateY(0px); /* العودة للمكان الأصلي عند الضغط */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .result {
+      margin-top: 2.5rem; /* مسافة أكبر */
+      font-weight: 700; /* خط أعرض */
+      font-size: 1.3rem; /* حجم خط أكبر للنتيجة */
+      padding: 1.2rem; /* padding أكبر */
+      border-radius: 10px;
+      min-height: 60px; /* ارتفاع أدنى مناسب */
+      line-height: 1.6;
+      text-align: center; /* توسيط النص */
+      opacity: 0; /* تبدأ مخفية */
+      transform: translateY(15px); /* تبدأ من الأسفل قليلاً */
+      transition: opacity 0.5s ease, transform 0.5s ease; /* انتقال سلس للظهور */
+      border: 1px solid transparent; /* حدود شفافة مبدئياً */
+    }
+    .result.show {
+        opacity: 1; /* تظهر */
+        transform: translateY(0); /* تعود للمكان الأصلي */
+    }
+    .result.success {
+        color: var(--success-color);
+        background-color: var(--success-bg);
+        border-color: var(--success-color);
+    }
+     .result.error {
+        color: var(--error-color);
+        background-color: var(--error-bg);
+        border-color: var(--error-color);
+    }
+
+
+    .footer-note {
+        margin-top: 2.5rem;
+        font-size: 0.9rem;
+        color: var(--label-color); /* لون أفتح */
+        text-align: center; /* توسيط النص */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+        body {
+            padding: 1rem 0.5rem; /* تقليل padding الجانبي */
+        }
+        .container {
+            padding: 1.5rem; /* تقليل padding الداخلي */
+            margin: 0.5rem;
+        }
+        h1 {
+            font-size: 1.8rem;
+        }
+        .logo-placeholder {
+            font-size: 1.5rem;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        button {
+             padding: 0.8rem 1.5rem;
+             font-size: 1.1rem;
+        }
+        .result {
+            font-size: 1.1rem;
+            padding: 1rem;
+        }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-placeholder">
+       DR YOUSSEF
+       <!-- <img src="path/to/your/logo.png" alt="Dr. Youssef Logo" style="max-width: 150px; height: auto;"> -->
+    </div>
+    <h1>أداة حساب بدائل الطعام</h1>
+
+    <label for="category">اختر الفئة:</label>
+    <select id="category" onchange="populateItems()">
+      <option value="proteins">بروتين (بعد الطهي)</option>
+      <option value="carbs">كربوهيدرات (قبل الطهي)</option>
+      <option value="fruits">فواكه (قبل الطهي)</option>
+      <option value="vegetables">خضراوات (قبل الطهي)</option>
+      <option value="legumes">بقوليات (قبل الطهي)</option>
+      <option value="fats">دهون صحية</option>
+    </select>
+
+    <label for="original">الصنف المكتوب في الدايت:</label>
+    <select id="original"></select>
+
+    <label for="amount">الكمية المكتوبة (بالجرام):</label>
+    <input type="number" id="amount" placeholder="مثلاً: 150" inputmode="numeric" pattern="[0-9]*" />
+
+    <label for="alternative">الصنف البديل المطلوب:</label>
+    <select id="alternative"></select>
+
+    <button onclick="calculateSwap()">احسب الكمية البديلة</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="footer-note">
+     إعداد: كوتش يوسف عبد الحفيظ <br/>
+     هذه الأداة للمشتركين فقط، يرجى عدم مشاركتها.
+    </div>
+  </div>
+
+  <script>
+    // --- بيانات البدائل (تبقى كما هي من النسخة السابقة الصحيحة) ---
+    const data = {
+      proteins:{"بياض بيض":300,"جبن قريش":200,"سمك سالمون":120,"سمك مكرونه":120,"سمك بلطي":120,"سمك سردين":120,"سمك بوري":120,"سمك فيليه":120,"جمبري":100,"كبده":130,"تونه":100,"لحم صدور":120,"كبده دجاج":120,"لحم ارانب":100,"لحم احمر":120,"بيض كامل":250,"لحم وراك":100,"فيتا لايت":150,"فصوص رومي":120,"روس بيف":120},
+      carbs:{"كورن فلكس":55,"مكرونه شعريه":65,"رز":60,"برغل":60,"فريك":60,"فينو":90,"خبز شامي":85,"خبز بلدي":100,"كيزر":90,"توست ابيض":90,"توست اسمر":90,"كوز ذره مشوي":90,"بطاطس":260,"قلقاس":180,"بطاطا":260,"كينوا":60,"شوفان":60,"بقسماط":60,"بليله":60,"ذره (فشار)":65},
+      fruits:{"بطيخ":200,"تفاح":100,"كمثري":100,"حرنكش":85,"يوسفي":100,"تين شوكي":100,"توت":85,"كاكا":65,"تين برشومي":85,"برتقال":100,"فراوله":200,"مانجا":100,"كيوي":100,"اناناس":100,"عنب":80,"برقوق":85,"جوافه":100,"شمام":200,"كانتلوب":200,"خوخ":100,"رمان":85,"مشمش":100,"بلح":20,"موز":60,"زبيب":20,"قراصيا":20,"تين مجفف":25,"مشمش مجفف":20},
+      vegetables:{"فلفل الوان":50,"خس":100,"خيار":100,"كوسه":50,"باميه":50,"جرجير":100,"باذنجان":150,"فاصوليا خضرا":50,"جزر":50,"قرنبيط":100,"بنجر":50,"طماطم":100,"مشروم":100,"خرشوف":50,"بروكلي":50,"ملوخيه":50,"سبانخ":100},
+      legumes:{"حمص":25,"عدس":30,"فاصولياء حمراء":30,"فاصولياء بيضاء":30,"لوبيا":30,"فول":30,"ترمس":50,"بسله":30},
+      fats:{"لوز":20,"كاجو":20,"بندق":20,"فول سوداني":20,"بيكان":20,"فصدق":20,"زيتون اسود":15,"افوكادو":60,"عين جمل":20,"بذور كتان":20,"بذور شيا":20,"زبد طبيعي":15,"زبد صناعي":15}
+    };
+
+    function populateItems() {
+      const category = document.getElementById("category").value;
+      if (!data[category]) {
+          document.getElementById("original").innerHTML = "<option>اختر فئة أولاً</option>";
+          document.getElementById("alternative").innerHTML = "<option>اختر فئة أولاً</option>";
+          return;
+      }
+
+      const items = data[category];
+      const originalSelect = document.getElementById("original");
+      const alternativeSelect = document.getElementById("alternative");
+
+      originalSelect.innerHTML = "";
+      alternativeSelect.innerHTML = "";
+
+      // إضافة خيارات مبدئية
+      const placeholderOption1 = document.createElement("option");
+      placeholderOption1.value = "";
+      placeholderOption1.textContent = "-- اختر الصنف الأصلي --";
+      placeholderOption1.disabled = true;
+      placeholderOption1.selected = true;
+      originalSelect.appendChild(placeholderOption1);
+
+      const placeholderOption2 = document.createElement("option");
+      placeholderOption2.value = "";
+      placeholderOption2.textContent = "-- اختر الصنف البديل --";
+      placeholderOption2.disabled = true;
+      placeholderOption2.selected = true;
+      alternativeSelect.appendChild(placeholderOption2);
+
+      // ملء القوائم
+      for (const [name, grams] of Object.entries(items)) {
+        const option1 = document.createElement("option");
+        option1.value = grams;
+        option1.dataset.name = name;
+        option1.textContent = name;
+        originalSelect.appendChild(option1);
+
+        const option2 = document.createElement("option");
+        option2.value = grams;
+        option2.dataset.name = name;
+        option2.textContent = name;
+        alternativeSelect.appendChild(option2);
+      }
+
+        // إعادة إخفاء النتيجة عند تغيير الفئة
+        const resultDiv = document.getElementById("result");
+        resultDiv.classList.remove('show', 'success', 'error');
+        resultDiv.textContent = '';
+    }
+
+    function calculateSwap() {
+      const originalSelect = document.getElementById("original");
+      const alternativeSelect = document.getElementById("alternative");
+      const amountInput = document.getElementById("amount");
+      const resultDiv = document.getElementById("result");
+
+      // إخفاء النتيجة السابقة قبل الحساب الجديد
+      resultDiv.classList.remove('show', 'success', 'error');
+      // تأخير بسيط للسماح للـ CSS بإعادة الإخفاء قبل الحساب
+      setTimeout(() => {
+          const originalValue = parseFloat(originalSelect.value);
+          const originalAmount = parseFloat(amountInput.value);
+          const alternativeValue = parseFloat(alternativeSelect.value);
+          const originalName = originalSelect.selectedOptions[0]?.dataset.name || 'الصنف الأصلي';
+          const altName = alternativeSelect.selectedOptions[0]?.dataset.name || 'الصنف البديل';
+
+          let errorMessage = "";
+          if (!originalSelect.value || !alternativeSelect.value || originalSelect.selectedIndex === 0 || alternativeSelect.selectedIndex === 0) {
+             errorMessage = "من فضلك اختر الصنف الأصلي والصنف البديل.";
+          } else if (isNaN(originalAmount) || originalAmount <= 0) {
+            errorMessage = "من فضلك أدخل كمية صحيحة وموجبة بالجرام.";
+          } else if (isNaN(originalValue) || isNaN(alternativeValue)) {
+             errorMessage = "حدث خطأ في قيم الأصناف المختارة.";
+          }
+
+          if (errorMessage) {
+              resultDiv.textContent = errorMessage;
+              resultDiv.classList.add('error', 'show'); // إظهار مع تنسيق الخطأ
+              return;
+          }
+
+          // المعادلة الحسابية
+          const result = (alternativeValue * originalAmount) / originalValue;
+
+          // عرض النتيجة
+          resultDiv.textContent = `الكمية المطلوبة من ${altName} هي: ${result.toFixed(1)} جرام (بدلاً من ${originalAmount} جرام ${originalName})`;
+          resultDiv.classList.add('success', 'show'); // إظهار مع تنسيق النجاح
+      }, 50); // تأخير 50ms
+    }
+
+    // ملء القوائم عند تحميل الصفحة
+    window.onload = populateItems;
+
+  </script>
+</body>
+</html>
