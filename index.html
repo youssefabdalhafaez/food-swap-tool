@@ -4,28 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>أداة بدائل الطعام الاحترافية - د. يوسف</title>
-
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #1a1d24; /* خلفية داكنة */
-      --container-bg: #252a34; /* خلفية الحاوية أفتح قليلاً */
-      --primary-accent: #ff8c00; /* برتقالي داكن (لون مميز) */
-      --primary-accent-darker: #e07b00; /* برتقالي أغمق للهوفر */
-      --text-color: #e0e0e0; /* لون نص فاتح */
-      --label-color: #a0a0a0; /* لون العناوين الفرعية (Labels) */
-      --input-bg: #313641; /* خلفية حقول الإدخال */
-      --input-border: #4a4f5a; /* حدود حقول الإدخال */
-      --input-focus-border: var(--primary-accent); /* لون الحدود عند التركيز */
-      --success-color: #2ecc71; /* أخضر للنجاح */
-      --success-bg: rgba(46, 204, 113, 0.1);
-      --error-color: #e74c3c; /* أحمر للخطأ */
-      --error-bg: rgba(231, 76, 60, 0.1);
+      --bg-color: #f5f7fa; /* أفتح للتصميم الحديث */
+      --container-bg: #ffffff; /* أبيض لصندوق المحتوى */
+      --primary-accent: #ff8c00; /* Orange Accent */
+      --primary-accent-darker: #e07b00;
+      --primary-accent-lighter: #ffa533;
+      --primary-gradient: linear-gradient(135deg, var(--primary-accent), var(--primary-accent-darker));
+      --primary-shadow: rgba(255, 140, 0, 0.3);
+      --text-color: #2d3748; /* لون نص غامق */
+      --label-color: #4a5568; /* لون ليبل داكن */
+      --input-bg: #f8fafc;
+      --input-border: #e2e8f0;
+      --input-focus-border: var(--primary-accent);
+      --success-color: #38a169;
+      --success-bg: #f0fff4;
+      --success-border: #c6f6d5;
+      --error-color: #e53e3e;
+      --error-bg: #fff5f5;
+      --error-border: #fed7d7;
+      --accent-light: rgba(255, 140, 0, 0.1); /* لون فاتح للخلفيات */
+      --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --card-border-radius: 16px;
       --font-family: 'Tajawal', sans-serif;
+      --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --bg-color: #1a202c;
+      --container-bg: #2d3748;
+      --text-color: #f7fafc;
+      --label-color: #e2e8f0;
+      --input-bg: #4a5568;
+      --input-border: #718096;
+      --success-bg: rgba(56, 161, 105, 0.2);
+      --success-border: rgba(56, 161, 105, 0.5);
+      --error-bg: rgba(229, 62, 62, 0.2);
+      --error-border: rgba(229, 62, 62, 0.5);
+      --accent-light: rgba(255, 140, 0, 0.2);
     }
 
     * {
@@ -39,232 +65,655 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       text-align: center;
-      padding: 2rem 1rem; /* إضافة padding جانبي للهواتف */
+      padding: 2rem 1rem;
       direction: rtl;
       line-height: 1.7;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start; /* المحاذاة للأعلى للسماح بالـ scroll */
       min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color var(--transition-medium);
+    }
+
+    @keyframes fadeInSlideUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 var(--primary-shadow); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 140, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .container {
-      background-color: var(--container-bg);
-      border-radius: 20px; /* حواف أكثر دائرية */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      max-width: 550px;
-      width: 100%; /* يأخذ العرض الكامل حتى max-width */
+      background: var(--container-bg);
+      border-radius: var(--card-border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 600px;
+      width: 100%;
       margin: 1rem auto;
-      padding: 2.5rem; /* padding داخلي أكبر */
-      text-align: right; /* محاذاة النصوص لليمين داخل الحاوية */
+      padding: 2.5rem;
+      text-align: right;
+      animation: fadeInSlideUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      opacity: 0;
+      position: relative;
+      transition: box-shadow var(--transition-medium), transform var(--transition-medium), background-color var(--transition-medium);
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.07);
     }
 
-    .logo-placeholder {
-      background-color: transparent; /* شفاف */
-      border: 2px solid var(--primary-accent); /* حدود باللون المميز */
-      border-radius: 12px;
-      margin-bottom: 2.5rem; /* مسافة أكبر */
-      padding: 1rem;
-      color: var(--primary-accent); /* لون النص مطابق للحدود */
-      font-weight: 700; /* خط أعرض */
-      font-size: 1.8rem; /* حجم أكبر */
-      text-align: center; /* توسيط النص */
-      /* يمكن وضع لوجو صورة هنا أيضاً */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .logo-container img {
+      max-width: 120px;
+      max-height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      padding: 5px;
+      background: white;
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+      transition: transform var(--transition-medium);
+    }
+
+    .logo-container:hover img {
+      transform: scale(1.05);
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .theme-toggle:hover {
+      color: var(--primary-accent);
+      transform: scale(1.1);
     }
 
     h1 {
-      color: var(--primary-accent);
-      margin-bottom: 2rem;
-      text-align: center; /* توسيط العنوان الرئيسي */
+      color: var(--primary-accent); 
+      margin-bottom: 2.5rem;
+      text-align: center;
       font-weight: 700;
-      font-size: 2.2rem; /* حجم أكبر للعنوان */
+      font-size: 2.2rem;
+      position: relative;
+     /* display: inline-block;*/
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
     }
 
     label {
       display: block;
       width: 100%;
-      margin: 1.2rem 0 0.6rem 0;
-      font-size: 1rem; /* حجم مناسب */
-      color: var(--label-color); /* لون أفتح قليلاً من النص الرئيسي */
-      font-weight: 400; /* خط عادي */
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+      color: var(--label-color);
+      font-weight: 500;
+      transition: color var(--transition-fast);
+    }
+
+    label i {
+      margin-left: 0.5rem;
+      color: var(--primary-accent);
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '\f107';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--label-color);
+      pointer-events: none;
+      transition: color var(--transition-fast), transform var(--transition-medium);
+    }
+
+    .select-wrapper:hover::after {
+      color: var(--primary-accent);
+    }
+
+    .select-wrapper:focus-within::after {
+      transform: translateY(-50%) rotate(180deg);
+      color: var(--primary-accent);
     }
 
     select, input[type="number"] {
       display: block;
       width: 100%;
-      padding: 0.9rem 1rem; /* padding أكبر */
-      border-radius: 10px; /* حواف دائرية */
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
       border: 1px solid var(--input-border);
       background-color: var(--input-bg);
       color: var(--text-color);
-      font-size: 1.1rem; /* حجم خط أكبر قليلاً */
+      font-size: 1.1rem;
       font-family: var(--font-family);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease; /* انتقال سلس */
-      margin-bottom: 1rem;
-      appearance: none; /* إزالة المظهر الافتراضي */
+      transition: border-color var(--transition-medium), box-shadow var(--transition-medium), background-color var(--transition-medium), transform var(--transition-fast);
+      appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
     }
-    /* Custom arrow for select */
-    select {
-       background-image: url('data:image/svg+xml;utf8,<svg fill="%23a0a0a0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-       background-repeat: no-repeat;
-       background-position: left 1rem center;
-       padding-left: 3rem; /* زيادة padding لليسار لإفساح مكان للسهم */
-    }
-
 
     input[type="number"]:focus, select:focus {
       outline: none;
       border-color: var(--input-focus-border);
-      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2); /* ظل خفيف عند التركيز */
+      box-shadow: 0 0 0 4px var(--primary-shadow);
+      transform: scale(1.01);
     }
 
-    /* لإخفاء الأسهم الافتراضية في حقل الرقم */
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
+
     input[type=number] {
-      -moz-appearance: textfield; /* Firefox */
+      -moz-appearance: textfield;
     }
 
-    /* Placeholder text style */
-     input::placeholder {
-        color: #777;
-        opacity: 1;
-     }
+    input::placeholder {
+      color: #999;
+      opacity: 1;
+      font-weight: 400;
+    }
 
-    button {
-      background: linear-gradient(90deg, var(--primary-accent), var(--primary-accent-darker)); /* تدرج لوني */
+    .btn {
+      background: var(--primary-gradient);
       color: #ffffff;
-      padding: 0.9rem 2rem; /* padding مناسب */
-      font-size: 1.2rem;
-      font-weight: 700; /* خط أعرض */
+      padding: 1.1rem 2rem;
+      font-size: 1.25rem;
+      font-weight: 700;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      margin-top: 2rem; /* مسافة أكبر فوق الزر */
-      width: 100%; /* يأخذ العرض الكامل */
-      transition: transform 0.2s ease, box-shadow 0.3s ease; /* انتقال للحركة والظل */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-medium);
+      box-shadow: 0 4px 15px var(--primary-shadow);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
-    button:hover {
-      transform: translateY(-2px); /* حركة بسيطة للأعلى عند التمرير */
-      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3); /* ظل أكبر بلون مميز */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
     }
-    button:active {
-        transform: translateY(0px); /* العودة للمكان الأصلي عند الضغط */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px var(--primary-shadow);
+    }
+
+    .btn:hover::before {
+      transform: translateX(100%);
+      transition: 0.75s;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
+    }
+    
+    .btn-loading .btn-text {
+      visibility: hidden;
+    }
+    
+    .btn-loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: -0.75rem 0 0 -0.75rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     .result {
-      margin-top: 2.5rem; /* مسافة أكبر */
-      font-weight: 700; /* خط أعرض */
-      font-size: 1.3rem; /* حجم خط أكبر للنتيجة */
-      padding: 1.2rem; /* padding أكبر */
-      border-radius: 10px;
-      min-height: 60px; /* ارتفاع أدنى مناسب */
+      margin-top: 2.5rem;
+      font-weight: 500;
+      font-size: 1.25rem;
+      padding: 1.3rem;
+      border-radius: 12px;
+      min-height: 65px;
       line-height: 1.6;
-      text-align: center; /* توسيط النص */
-      opacity: 0; /* تبدأ مخفية */
-      transform: translateY(15px); /* تبدأ من الأسفل قليلاً */
-      transition: opacity 0.5s ease, transform 0.5s ease; /* انتقال سلس للظهور */
-      border: 1px solid transparent; /* حدود شفافة مبدئياً */
-    }
-    .result.show {
-        opacity: 1; /* تظهر */
-        transform: translateY(0); /* تعود للمكان الأصلي */
-    }
-    .result.success {
-        color: var(--success-color);
-        background-color: var(--success-bg);
-        border-color: var(--success-color);
-    }
-     .result.error {
-        color: var(--error-color);
-        background-color: var(--error-bg);
-        border-color: var(--error-color);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+                  transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+                  background-color var(--transition-medium), 
+                  border-color var(--transition-medium);
+      border: 1px solid transparent;
+      color: var(--text-color);
     }
 
+    .result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .result.success {
+      color: var(--success-color);
+      background-color: var(--success-bg);
+      border-color: var(--success-border);
+      font-weight: 700;
+      animation: pulseGlow 2s infinite;
+    }
+
+    .result.error {
+      color: var(--error-color);
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      font-weight: 700;
+    }
 
     .footer-note {
-        margin-top: 2.5rem;
-        font-size: 0.9rem;
-        color: var(--label-color); /* لون أفتح */
-        text-align: center; /* توسيط النص */
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: var(--label-color);
+      text-align: center;
+      transition: color var(--transition-medium);
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-        body {
-            padding: 1rem 0.5rem; /* تقليل padding الجانبي */
-        }
-        .container {
-            padding: 1.5rem; /* تقليل padding الداخلي */
-            margin: 0.5rem;
-        }
-        h1 {
-            font-size: 1.8rem;
-        }
-        .logo-placeholder {
-            font-size: 1.5rem;
-            padding: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-        button {
-             padding: 0.8rem 1.5rem;
-             font-size: 1.1rem;
-        }
-        .result {
-            font-size: 1.1rem;
-            padding: 1rem;
-        }
+    /* Recent Swaps History */
+    .history-container {
+      max-width: 600px;
+      width: 100%;
+      margin: 2rem auto 0;
+      background: var(--container-bg);
+      border-radius: var(--card-border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 2rem;
+      opacity: 0;
+      animation: fadeInSlideUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+      transition: background-color var(--transition-medium);
     }
 
+    .history-title {
+      color: var(--text-color);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--transition-medium);
+    }
+
+    .history-title i {
+      margin-left: 0.7rem;
+      color: var(--primary-accent);
+    }
+
+    .history-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .history-item {
+      background-color: var(--accent-light);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      position: relative;
+      transition: transform var(--transition-fast), box-shadow var(--transition-medium);
+      border-right: 3px solid var(--primary-accent);
+      text-align: right;
+    }
+
+    .history-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .history-item-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .history-item-detail {
+      color: var(--label-color);
+      font-size: 0.9rem;
+    }
+
+    .history-item-timestamp {
+      font-size: 0.75rem;
+      color: var(--label-color);
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+
+    .empty-history {
+      color: var(--label-color);
+      text-align: center;
+      padding: 2rem 0;
+      font-style: italic;
+    }
+
+    /* Tooltips */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: var(--container-bg);
+      color: var(--text-color);
+      text-align: center;
+      border-radius: 6px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      font-size: 0.9rem;
+      font-weight: normal;
+      border: 1px solid var(--input-border);
+    }
+
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--input-border) transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Custom Select UI Enhancement */
+    .fancy-select {
+      position: relative;
+      user-select: none;
+    }
+
+    .fancy-select-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      cursor: pointer;
+      transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+    }
+
+    .fancy-select-header:hover {
+      border-color: var(--input-focus-border);
+    }
+
+    .fancy-select-current {
+      color: var(--text-color);
+      font-size: 1.1rem;
+    }
+
+    .fancy-select-placeholder {
+      color: #999;
+    }
+
+    .fancy-select-icon {
+      transition: transform var(--transition-medium);
+    }
+
+    .fancy-select.open .fancy-select-icon {
+      transform: rotate(180deg);
+    }
+
+    .fancy-select-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      left: 0;
+      max-height: 250px;
+      overflow-y: auto;
+      background-color: var(--container-bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity var(--transition-medium), transform var(--transition-medium);
+    }
+
+    .fancy-select.open .fancy-select-dropdown {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .fancy-select-option {
+      padding: 0.8rem 1.2rem;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+
+    .fancy-select-option:hover {
+      background-color: var(--accent-light);
+    }
+
+    .fancy-select-option.selected {
+      background-color: var(--primary-accent);
+      color: white;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+
+      .container, .history-container {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+
+      h1::after {
+        width: 60px;
+      }
+
+      select, input[type="number"], .fancy-select-header {
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .result {
+        font-size: 1.1rem;
+        padding: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container, .history-container {
+        padding: 1.25rem;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .logo-container img {
+        max-width: 90px;
+        max-height: 90px;
+      }
+
+      .theme-toggle {
+        top: 1rem;
+        left: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Animation for new features */
+    @keyframes highlight {
+      0%, 100% { background-color: transparent; }
+      50% { background-color: var(--accent-light); }
+    }
+
+    .highlight {
+      animation: highlight 2s ease-in-out;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo-placeholder">
-       DR YOUSSEF
-       <!-- <img src="path/to/your/logo.png" alt="Dr. Youssef Logo" style="max-width: 150px; height: auto;"> -->
+  <div class="main-wrapper">
+    <div class="container">
+      <button id="themeToggle" class="theme-toggle" aria-label="تبديل الوضع المظلم">
+        <i class="fas fa-moon"></i>
+      </button>
+      
+      <div class="logo-container">
+        <img src="placeholder-logo.png" alt="شعار د. يوسف" id="logo">
+      </div>
+      
+      <h1>أداة حساب بدائل الطعام</h1>
+      
+      <div class="input-group">
+        <label for="category"><i class="fas fa-utensils"></i> اختر الفئة:</label>
+        <div class="select-wrapper">
+          <select id="category">
+            <option value="" disabled selected>-- اختر فئة الطعام --</option>
+            <option value="proteins">بروتين (بعد الطهي)</option>
+            <option value="carbs">كربوهيدرات (قبل الطهي)</option>
+            <option value="fruits">فواكه (قبل الطهي)</option>
+            <option value="vegetables">خضراوات (قبل الطهي)</option>
+            <option value="legumes">بقوليات (قبل الطهي)</option>
+            <option value="fats">دهون صحية</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label for="original"><i class="fas fa-clipboard-list"></i> الصنف المكتوب في الدايت:</label>
+        <div class="select-wrapper">
+          <select id="original">
+            <option value="" disabled selected>-- اختر الفئة أولاً --</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label for="amount">
+          <i class="fas fa-balance-scale"></i> الكمية المكتوبة في الدايت (بالجرام):
+          <span class="tooltip"><i class="fas fa-info-circle"></i>
+            <span class="tooltiptext">أدخل الكمية بالجرام كما هي مذكورة في النظام الغذائي الخاص بك</span>
+          </span>
+        </label>
+        <input type="number" id="amount" placeholder="مثلاً: 150" inputmode="numeric" pattern="[0-9]*" min="1" />
+      </div>
+      
+      <div class="input-group">
+        <label for="alternative"><i class="fas fa-exchange-alt"></i> الصنف الذي تريد التبديل إليه:</label>
+        <div class="select-wrapper">
+          <select id="alternative">
+            <option value="" disabled selected>-- اختر الفئة أولاً --</option>
+          </select>
+        </div>
+      </div>
+      
+      <button id="calculateBtn" class="btn" onclick="calculateSwap()">
+        <span class="btn-text">احسب الكمية البديلة</span>
+      </button>
+      
+      <div class="result" id="result"></div>
+      
+      <div class="footer-note">
+        إعداد: <strong>د. يوسف عبد الحفيظ</strong><br/>
+        هذه الأداة للمشتركين فقط، يرجى عدم مشاركتها.
+      </div>
     </div>
-    <h1>أداة حساب بدائل الطعام</h1>
-
-    <label for="category">اختر الفئة:</label>
-    <select id="category" onchange="populateItems()">
-      <option value="proteins">بروتين (بعد الطهي)</option>
-      <option value="carbs">كربوهيدرات (قبل الطهي)</option>
-      <option value="fruits">فواكه (قبل الطهي)</option>
-      <option value="vegetables">خضراوات (قبل الطهي)</option>
-      <option value="legumes">بقوليات (قبل الطهي)</option>
-      <option value="fats">دهون صحية</option>
-    </select>
-
-    <label for="original">الصنف المكتوب في الدايت:</label>
-    <select id="original"></select>
-
-    <label for="amount">الكمية المكتوبة (بالجرام):</label>
-    <input type="number" id="amount" placeholder="مثلاً: 150" inputmode="numeric" pattern="[0-9]*" />
-
-    <label for="alternative">الصنف البديل المطلوب:</label>
-    <select id="alternative"></select>
-
-    <button onclick="calculateSwap()">احسب الكمية البديلة</button>
-
-    <div class="result" id="result"></div>
-
-    <div class="footer-note">
-     إعداد: كوتش يوسف عبد الحفيظ <br/>
-     هذه الأداة للمشتركين فقط، يرجى عدم مشاركتها.
+    
+    <!-- Recent History Section -->
+    <div class="history-container">
+      <h2 class="history-title"><i class="fas fa-history"></i> سجل العمليات الأخيرة</h2>
+      <ul id="historyList" class="history-list">
+        <li class="empty-history">لم تقم بأي عمليات حساب حتى الآن</li>
+      </ul>
     </div>
   </div>
 
   <script>
-    // --- بيانات البدائل (تبقى كما هي من النسخة السابقة الصحيحة) ---
+    // --- بيانات البدائل (تبقى كما هي) ---
     const data = {
       proteins:{"بياض بيض":300,"جبن قريش":200,"سمك سالمون":120,"سمك مكرونه":120,"سمك بلطي":120,"سمك سردين":120,"سمك بوري":120,"سمك فيليه":120,"جمبري":100,"كبده":130,"تونه":100,"لحم صدور":120,"كبده دجاج":120,"لحم ارانب":100,"لحم احمر":120,"بيض كامل":250,"لحم وراك":100,"فيتا لايت":150,"فصوص رومي":120,"روس بيف":120},
       carbs:{"كورن فلكس":55,"مكرونه شعريه":65,"رز":60,"برغل":60,"فريك":60,"فينو":90,"خبز شامي":85,"خبز بلدي":100,"كيزر":90,"توست ابيض":90,"توست اسمر":90,"كوز ذره مشوي":90,"بطاطس":260,"قلقاس":180,"بطاطا":260,"كينوا":60,"شوفان":60,"بقسماط":60,"بليله":60,"ذره (فشار)":65},
@@ -274,100 +723,447 @@
       fats:{"لوز":20,"كاجو":20,"بندق":20,"فول سوداني":20,"بيكان":20,"فصدق":20,"زيتون اسود":15,"افوكادو":60,"عين جمل":20,"بذور كتان":20,"بذور شيا":20,"زبد طبيعي":15,"زبد صناعي":15}
     };
 
-    function populateItems() {
-      const category = document.getElementById("category").value;
-      if (!data[category]) {
-          document.getElementById("original").innerHTML = "<option>اختر فئة أولاً</option>";
-          document.getElementById("alternative").innerHTML = "<option>اختر فئة أولاً</option>";
-          return;
+    // كود JavaScript المُحسّن
+    document.addEventListener('DOMContentLoaded', function() {
+      // إعداد الوضع المظلم (Dark Mode)
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = themeToggle.querySelector('i');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      // تحقق من وجود تفضيل سابق مخزّن
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+        document.body.classList.add('dark-mode');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
       }
+      
+      themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        if (document.body.classList.contains('dark-mode')) {
+          themeIcon.classList.remove('fa-moon');
+          themeIcon.classList.add('fa-sun');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          themeIcon.classList.remove('fa-sun');
+          themeIcon.classList.add('fa-moon');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+      
+      // تحميل الشعار وتطبيق التأثيرات
+      const logo = document.getElementById('logo');
+      logo.addEventListener('load', function() {
+        this.classList.add('loaded');
+      });
+      
+      // تهيئة السجل
+      const history = JSON.parse(localStorage.getItem('foodSwapHistory')) || [];
+      updateHistoryUI();
+      
+      // الفئات والأصناف المحددة
+      let categoryCache = {};
+      
+      // إعداد الحقول عند التحميل
+      populateItems();
+      setupEventListeners();
+      
+      // إظهار تلميح للمستخدم
+      setTimeout(() => {
+        const categorySelect = document.getElementById('category');
+        if (!categorySelect.value) {
+          categorySelect.classList.add('highlight');
+          setTimeout(() => categorySelect.classList.remove('highlight'), 2000);
+        }
+      }, 1500);
+    });
 
-      const items = data[category];
-      const originalSelect = document.getElementById("original");
-      const alternativeSelect = document.getElementById("alternative");
+    // إعداد مستمعي الأحداث
+    function setupEventListeners() {
+      const categorySelect = document.getElementById('category');
+      const originalSelect = document.getElementById('original');
+      const alternativeSelect = document.getElementById('alternative');
+      const amountInput = document.getElementById('amount');
+      const calculateBtn = document.getElementById('calculateBtn');
+      
+      categorySelect.addEventListener('change', function() {
+        populateItems();
+        // أعد تعيين النتيجة عند تغيير الفئة
+        resetResult();
+      });
+      
+      // حدث الضغط على مفتاح الإدخال في حقل الكمية
+      amountInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          calculateSwap();
+          e.preventDefault();
+        }
+      });
+      
+      // الحقول المطلوبة
+      [categorySelect, originalSelect, alternativeSelect, amountInput].forEach(el => {
+        el.addEventListener('change', function() {
+          this.classList.remove('error-field');
+        });
+        
+        if (el === amountInput) {
+          el.addEventListener('input', function() {
+            this.classList.remove('error-field');
+          });
+        }
+      });
+      
+      // تفاعلات تحسين تجربة المستخدم
+      amountInput.addEventListener('focus', function() {
+        if (!this.value) {
+          this.placeholder = '';
+        }
+      });
+      
+      amountInput.addEventListener('blur', function() {
+        if (!this.value) {
+          this.placeholder = 'مثلاً: 150';
+        }
+      });
+    }
 
-      originalSelect.innerHTML = "";
-      alternativeSelect.innerHTML = "";
-
-      // إضافة خيارات مبدئية
-      const placeholderOption1 = document.createElement("option");
-      placeholderOption1.value = "";
-      placeholderOption1.textContent = "-- اختر الصنف الأصلي --";
+    // تعبئة القوائم المنسدلة بالأصناف
+    function populateItems() {
+      const category = document.getElementById('category').value;
+      const originalSelect = document.getElementById('original');
+      const alternativeSelect = document.getElementById('alternative');
+      
+      // إعادة تعيين القوائم المنسدلة
+      originalSelect.innerHTML = '';
+      alternativeSelect.innerHTML = '';
+      
+      // إضافة الخيار الافتراضي
+      const placeholderOption1 = document.createElement('option');
+      placeholderOption1.value = '';
+      placeholderOption1.textContent = '-- اختر الصنف الأصلي --';
       placeholderOption1.disabled = true;
       placeholderOption1.selected = true;
       originalSelect.appendChild(placeholderOption1);
-
-      const placeholderOption2 = document.createElement("option");
-      placeholderOption2.value = "";
-      placeholderOption2.textContent = "-- اختر الصنف البديل --";
+      
+      const placeholderOption2 = document.createElement('option');
+      placeholderOption2.value = '';
+      placeholderOption2.textContent = '-- اختر الصنف البديل --';
       placeholderOption2.disabled = true;
       placeholderOption2.selected = true;
       alternativeSelect.appendChild(placeholderOption2);
-
-      // ملء القوائم
-      for (const [name, grams] of Object.entries(items)) {
-        const option1 = document.createElement("option");
+      
+      // التحقق من أن الفئة محددة ومتوفرة
+      if (!category || !data[category]) {
+        return;
+      }
+      
+      // ترتيب العناصر أبجدياً
+      const sortedItems = Object.entries(data[category]).sort((a, b) => 
+        a[0].localeCompare(b[0], 'ar')
+      );
+      
+      // إضافة العناصر المرتبة للقوائم المنسدلة
+      for (const [name, grams] of sortedItems) {
+        const option1 = document.createElement('option');
         option1.value = grams;
         option1.dataset.name = name;
         option1.textContent = name;
-        originalSelect.appendChild(option1);
-
-        const option2 = document.createElement("option");
-        option2.value = grams;
-        option2.dataset.name = name;
-        option2.textContent = name;
-        alternativeSelect.appendChild(option2);
+        
+        originalSelect.appendChild(option1.cloneNode(true));
+        alternativeSelect.appendChild(option1.cloneNode(true));
       }
-
-        // إعادة إخفاء النتيجة عند تغيير الفئة
-        const resultDiv = document.getElementById("result");
-        resultDiv.classList.remove('show', 'success', 'error');
-        resultDiv.textContent = '';
+      
+      // تخزين الأصناف في الكاش للاستخدام اللاحق
+      categoryCache[category] = sortedItems;
     }
 
-    function calculateSwap() {
-      const originalSelect = document.getElementById("original");
-      const alternativeSelect = document.getElementById("alternative");
-      const amountInput = document.getElementById("amount");
-      const resultDiv = document.getElementById("result");
-
-      // إخفاء النتيجة السابقة قبل الحساب الجديد
+    // إعادة تعيين النتيجة
+    function resetResult() {
+      const resultDiv = document.getElementById('result');
       resultDiv.classList.remove('show', 'success', 'error');
-      // تأخير بسيط للسماح للـ CSS بإعادة الإخفاء قبل الحساب
-      setTimeout(() => {
-          const originalValue = parseFloat(originalSelect.value);
-          const originalAmount = parseFloat(amountInput.value);
-          const alternativeValue = parseFloat(alternativeSelect.value);
-          const originalName = originalSelect.selectedOptions[0]?.dataset.name || 'الصنف الأصلي';
-          const altName = alternativeSelect.selectedOptions[0]?.dataset.name || 'الصنف البديل';
-
-          let errorMessage = "";
-          if (!originalSelect.value || !alternativeSelect.value || originalSelect.selectedIndex === 0 || alternativeSelect.selectedIndex === 0) {
-             errorMessage = "من فضلك اختر الصنف الأصلي والصنف البديل.";
-          } else if (isNaN(originalAmount) || originalAmount <= 0) {
-            errorMessage = "من فضلك أدخل كمية صحيحة وموجبة بالجرام.";
-          } else if (isNaN(originalValue) || isNaN(alternativeValue)) {
-             errorMessage = "حدث خطأ في قيم الأصناف المختارة.";
-          }
-
-          if (errorMessage) {
-              resultDiv.textContent = errorMessage;
-              resultDiv.classList.add('error', 'show'); // إظهار مع تنسيق الخطأ
-              return;
-          }
-
-          // المعادلة الحسابية
-          const result = (alternativeValue * originalAmount) / originalValue;
-
-          // عرض النتيجة
-          resultDiv.textContent = `الكمية المطلوبة من ${altName} هي: ${result.toFixed(1)} جرام (بدلاً من ${originalAmount} جرام ${originalName})`;
-          resultDiv.classList.add('success', 'show'); // إظهار مع تنسيق النجاح
-      }, 50); // تأخير 50ms
+      resultDiv.textContent = '';
     }
 
-    // ملء القوائم عند تحميل الصفحة
-    window.onload = populateItems;
+    // عملية حساب البديل
+    function calculateSwap() {
+      // عناصر واجهة المستخدم
+      const categorySelect = document.getElementById('category');
+      const originalSelect = document.getElementById('original');
+      const alternativeSelect = document.getElementById('alternative');
+      const amountInput = document.getElementById('amount');
+      const resultDiv = document.getElementById('result');
+      const calculateBtn = document.getElementById('calculateBtn');
+      
+      // إعادة تعيين النتيجة وإضافة فئة التحميل
+      resetResult();
+      calculateBtn.classList.add('btn-loading');
+      
+      // محاكاة معالجة البيانات - تأخير قصير لتحسين تجربة المستخدم
+      setTimeout(() => {
+        // إزالة فئة التحميل
+        calculateBtn.classList.remove('btn-loading');
+        
+        // التحقق من صحة الحقول
+        let errorMessage = validateInputs(categorySelect, originalSelect, alternativeSelect, amountInput);
+        
+        if (errorMessage) {
+          showResult(errorMessage, 'error');
+          return;
+        }
+        
+        // بيانات الحساب
+        const originalValue = parseFloat(originalSelect.value);
+        const originalAmount = parseFloat(amountInput.value);
+        const alternativeValue = parseFloat(alternativeSelect.value);
+        const originalName = originalSelect.selectedOptions[0].dataset.name;
+        const altName = alternativeSelect.selectedOptions[0].dataset.name;
+        const categoryName = categorySelect.selectedOptions[0].textContent;
+        
+        // حساب الكمية البديلة
+        const result = (alternativeValue * originalAmount) / originalValue;
+        
+        // عرض النتيجة بتنسيق محسن
+        const resultText = `
+          <div>الكمية المطلوبة من <strong>${altName}</strong> هي:</div>
+          <div style="font-size: 1.5em; margin: 0.5rem 0;"><strong>${result.toFixed(1)} جرام</strong></div>
+          <div>(بدلاً من ${originalAmount} جرام ${originalName})</div>
+        `;
+        
+        showResult(resultText, 'success');
+        
+        // إضافة العملية للسجل
+        addToHistory(originalName, originalAmount, altName, result.toFixed(1), categoryName);
+        
+        // تأثير حركي لتمييز النتيجة
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 800); // تأخير 800 مللي ثانية لمحاكاة المعالجة
+    }
 
+    // التحقق من صحة المدخلات
+    function validateInputs(categorySelect, originalSelect, alternativeSelect, amountInput) {
+      // تحقق من تحديد الفئة
+      if (!categorySelect.value) {
+        categorySelect.classList.add('error-field');
+        return "يرجى اختيار فئة الطعام أولاً.";
+      }
+      
+      // تحقق من تحديد الصنف الأصلي
+      if (!originalSelect.value || originalSelect.selectedIndex === 0) {
+        originalSelect.classList.add('error-field');
+        return "يرجى اختيار الصنف الأصلي.";
+      }
+      
+      // تحقق من تحديد الصنف البديل
+      if (!alternativeSelect.value || alternativeSelect.selectedIndex === 0) {
+        alternativeSelect.classList.add('error-field');
+        return "يرجى اختيار الصنف البديل.";
+      }
+      
+      // تحقق من إدخال كمية صحيحة
+      const amount = parseFloat(amountInput.value);
+      if (isNaN(amount) || amount <= 0) {
+        amountInput.classList.add('error-field');
+        return "يرجى إدخال كمية صحيحة وموجبة بالجرام.";
+      }
+      
+      // تحقق من عدم اختيار نفس الصنف كبديل
+      if (originalSelect.value === alternativeSelect.value && 
+          originalSelect.selectedOptions[0].dataset.name === alternativeSelect.selectedOptions[0].dataset.name) {
+        alternativeSelect.classList.add('error-field');
+        return "لقد اخترت نفس الصنف كبديل!";
+      }
+      
+      return null; // لا توجد أخطاء
+    }
+
+    // عرض النتيجة
+    function showResult(message, type) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = message;
+      
+      // إعادة تعيين الفئات
+      resultDiv.classList.remove('show', 'success', 'error');
+      
+      // تأخير قصير قبل عرض النتيجة (للسماح بالتأثير البصري)
+      setTimeout(() => {
+        resultDiv.classList.add('show');
+        if (type) {
+          resultDiv.classList.add(type);
+        }
+      }, 50);
+    }
+    
+    // إضافة عملية للسجل
+    function addToHistory(originalItem, originalAmount, alternativeItem, alternativeAmount, category) {
+      // الحد الأقصى لعدد العمليات المخزنة
+      const MAX_HISTORY = 5;
+      
+      // الحصول على السجل الحالي أو إنشاء سجل جديد
+      let history = JSON.parse(localStorage.getItem('foodSwapHistory')) || [];
+      
+      // إضافة العملية الجديدة في بداية المصفوفة
+      history.unshift({
+        originalItem,
+        originalAmount,
+        alternativeItem,
+        alternativeAmount,
+        category,
+        timestamp: new Date().toISOString()
+      });
+      
+      // الاحتفاظ فقط بـ MAX_HISTORY عناصر
+      if (history.length > MAX_HISTORY) {
+        history = history.slice(0, MAX_HISTORY);
+      }
+      
+      // تخزين السجل المحدث
+      localStorage.setItem('foodSwapHistory', JSON.stringify(history));
+      
+      // تحديث واجهة السجل
+      updateHistoryUI();
+    }
+    
+    // تحديث واجهة السجل
+    function updateHistoryUI() {
+      const historyList = document.getElementById('historyList');
+      const history = JSON.parse(localStorage.getItem('foodSwapHistory')) || [];
+      
+      // تفريغ القائمة
+      historyList.innerHTML = '';
+      
+      // عرض رسالة إذا كان السجل فارغًا
+      if (history.length === 0) {
+        historyList.innerHTML = '<li class="empty-history">لم تقم بأي عمليات حساب حتى الآن</li>';
+        return;
+      }
+      
+      // إضافة كل عنصر إلى القائمة
+      history.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'history-item';
+        
+        // تنسيق الوقت
+        const timestamp = new Date(item.timestamp);
+        const formattedDate = `${timestamp.toLocaleDateString('ar-EG')} - ${timestamp.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })}`;
+        
+        li.innerHTML = `
+          <div class="history-item-title">${item.alternativeItem} ↔ ${item.originalItem}</div>
+          <div class="history-item-detail">
+            <span>${item.alternativeAmount} جرام ${item.alternativeItem}</span> = 
+            <span>${item.originalAmount} جرام ${item.originalItem}</span>
+          </div>
+          <div class="history-item-detail">الفئة: ${item.category}</div>
+          <div class="history-item-timestamp">${formattedDate}</div>
+        `;
+        
+        // إضافة تأثير ظهور تدريجي للعناصر
+        li.style.animationDelay = `${index * 0.1}s`;
+        
+        historyList.appendChild(li);
+      });
+      
+      // إضافة زر لمسح السجل
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'btn';
+      clearBtn.style.marginTop = '1rem';
+      clearBtn.style.fontSize = '0.9rem';
+      clearBtn.style.padding = '0.6rem';
+      clearBtn.innerHTML = '<i class="fas fa-trash-alt"></i> مسح السجل';
+      clearBtn.addEventListener('click', clearHistory);
+      
+      historyList.appendChild(clearBtn);
+    }
+    
+    // مسح السجل
+    function clearHistory() {
+      // عرض تأكيد بسيط
+      if (confirm('هل أنت متأكد من رغبتك في مسح سجل العمليات؟')) {
+        localStorage.removeItem('foodSwapHistory');
+        updateHistoryUI();
+      }
+    }
+    
+    // تحسين سلوك مربعات الاختيار (fancy selects) - اختياري
+    function initFancySelects() {
+      // يمكن تنفيذ هذه الميزة كتحسين إضافي
+      // للتحكم بشكل أفضل في مظهر وسلوك القوائم المنسدلة
+      console.log('Fancy selects initialized');
+    }
+    
+    // اقتراح أصناف استنادًا إلى الاستخدام السابق
+    function suggestItems() {
+      // ميزة محتملة: اقتراح الأصناف التي يستخدمها المستخدم بشكل متكرر
+      console.log('Items suggested based on usage patterns');
+    }
+    
+    // تصدير النتائج إلى بيانات قابلة للمشاركة (مثل نص أو صورة)
+    function exportResults() {
+      // ميزة محتملة: تصدير النتائج لمشاركتها
+      console.log('Results exported');
+    }
+    
+    // ميزات تحسين تجربة المستخدم الإضافية
+    
+    // تنفيذ الرسوم المتحركة عند التمرير
+    window.addEventListener('scroll', function() {
+      const elements = document.querySelectorAll('.container, .history-container');
+      
+      elements.forEach(element => {
+        const position = element.getBoundingClientRect();
+        
+        // إذا كان العنصر في مجال الرؤية
+        if (position.top < window.innerHeight && position.bottom >= 0) {
+          element.classList.add('in-view');
+        }
+      });
+    });
+    
+    // تأثيرات تفاعلية إضافية للأزرار
+    document.querySelectorAll('.btn').forEach(button => {
+      button.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+      });
+      
+      button.addEventListener('mousedown', function() {
+        this.style.transform = 'translateY(0)';
+      });
+      
+      button.addEventListener('mouseup', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+    });
+    
+    // تنفيذ الأختام المائية والشعارات المخصصة
+    function setupWatermark() {
+      // إضافة علامة مائية خفيفة باسم الدكتور أو الشعار
+      const watermark = document.createElement('div');
+      watermark.className = 'watermark';
+      watermark.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        opacity: 0.05;
+        font-size: 2rem;
+        font-weight: bold;
+        pointer-events: none;
+        z-index: -1;
+      `;
+      watermark.textContent = 'د. يوسف عبد الحفيظ';
+      document.body.appendChild(watermark);
+    }
+    
+    // تشغيل الإعداد المبدئي مع DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // تنفيذ الختم المائي
+      setupWatermark();
+      
+      // بدء باقي الميزات التفاعلية
+      initFancySelects();
+    });
   </script>
 </body>
 </html>
